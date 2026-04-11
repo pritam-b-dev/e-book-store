@@ -8,7 +8,7 @@ const NavBar = () => {
         <NavLink
           to={"/"}
           className={({ isActive }) =>
-            isActive ? "text-green-500 border border-green-500" : ""
+            `font-semibold mr-5 ${isActive ? "text-green-500 border border-green-500" : ""}`
           }
         >
           Home
@@ -18,7 +18,7 @@ const NavBar = () => {
         <NavLink
           to={"/books"}
           className={({ isActive }) =>
-            isActive ? "text-green-500 border border-green-500" : ""
+            `font-semibold mr-5 ${isActive ? "text-green-500 border border-green-500" : ""}`
           }
         >
           Listed Books
@@ -28,7 +28,7 @@ const NavBar = () => {
         <NavLink
           to={"/page-to-read"}
           className={({ isActive }) =>
-            isActive ? "text-green-500 border border-green-500" : ""
+            `font-semibold mr-5 ${isActive ? "text-green-500 border border-green-500" : ""}`
           }
         >
           Page to Read
@@ -38,8 +38,8 @@ const NavBar = () => {
   );
 
   return (
-    <div>
-      <div className="navbar bg-base-100 shadow-sm">
+    <div className="bg-base-100 shadow-sm">
+      <div className="navbar container mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -71,8 +71,9 @@ const NavBar = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
         </div>
-        <div className="navbar-end">
-          <a className="btn">Button</a>
+        <div className="navbar-end space-x-3">
+          <button className="btn btn-dash btn-success">Signin</button>
+          <button className="btn btn-dash btn-info">Signup</button>
         </div>
       </div>
     </div>
