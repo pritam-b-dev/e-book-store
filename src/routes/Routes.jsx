@@ -22,6 +22,7 @@ const router = createBrowserRouter([
       {
         path: "/page-to-read",
         element: <PageToRead />,
+        loader: () => fetch("/booksData.json"),
       },
       {
         //bookcard.jsx কে এই পেজের এক্সেস দেয়া আছে bookId পেরামিটারে জেসনের bookID টা পাস করে।
