@@ -1,0 +1,95 @@
+Context API অনেকেই প্রথমে বুঝতে পারে না। চলো একদম গোড়া থেকে বুঝি।
+
+আগে সমস্যাটা বোঝো
+ধরো তোমার বাড়িতে একটা টিভি রিমোট আছে।
+বাবা রিমোট দিয়ে চ্যানেল বদলাল। মা সেটা দেখল। তুমিও দেখলে।
+মানে একটা রিমোট — সবাই ব্যবহার করতে পারছে।
+React-এ সমস্যা হলো — এক component-এর data আরেক component-এ পাঠাতে হলে props দিয়ে পাঠাতে হয়। কিন্তু অনেক দূরে পাঠাতে গেলে অনেক ঝামেলা।
+Context API হলো সেই টিভি রিমোটের মতো — একবার বানাও, যে কেউ যেকোনো জায়গা থেকে ব্যবহার করতে পারবে।
+
+তোমার code-এ কী হয়েছে ধাপে ধাপে
+ধাপ ১ — একটা খালি বাক্স বানালে
+js
+export const BookContextApi = createContext();
+এটা শুধু একটা খালি বাক্স তৈরি করেছে। এখানে পরে data রাখা হবে।
+
+ধাপ ২ — বাক্সে data ভরলে
+jsx
+const BookContext = ({ children }) => {
+  const [storeBook, setStoreBook] = useState([]);
+
+  const handleMarkAsRead = (currentBook) => {
+    // বই যোগ করার কাজ
+  };
+
+  const data = { storeBook, handleMarkAsRead };
+
+  return (
+    <BookContextApi.Provider value={data}>
+      {children}
+    </BookContextApi.Provider>
+  );
+};
+এখানে Provider হলো সেই টিভি রিমোটের সিগন্যাল টাওয়ার।
+value={data} মানে — এই data সবাইকে দিতে চাই।
+
+ধাপ ৩ — children কী?
+তুমি main.jsx-এ এভাবে লিখেছ:
+jsx
+<BookContext>
+  <App />
+</BookContext>
+এখানে <App /> হলো children।
+মানে BookContext-এর ভেতরে যা আছে সেটাই children। Provider সেই children-দের সবাইকে data দিতে পারে।
+ভাবো — টাওয়ার (Provider) সিগন্যাল ছাড়ছে। আর টিভি (children) সেই সিগন্যাল ধরছে।
+
+ধাপ ৪ — যেকোনো জায়গা থেকে data নিলে
+jsx
+const { storeBook, handleMarkAsRead } = useContext(BookContextApi);
+এটা হলো রিমোট তুলে নেওয়া। যেকোনো component এই লাইন লিখলেই সে data পেয়ে যাবে।
+
+পুরো যাত্রাটা এক নজরে
+BookContext.jsx
+(storeBook আর handleMarkAsRead বানালে)
+          ↓
+Provider দিয়ে সবাইকে দিলে
+          ↓
+BookDetails.jsx → useContext দিয়ে নিল
+          ↓
+Button click করলে → handleMarkAsRead চলল
+          ↓
+storeBook-এ নতুন বই যোগ হলো
+          ↓
+Books.jsx → useContext দিয়ে storeBook নিল
+          ↓
+সেখানে নতুন বই দেখাল
+
+
+যখন কোনো function লিখবে, এভাবে ভাবো
+প্রশ্ন ১ — আমি কী করতে চাই? "একটা বই Read List-এ যোগ করতে চাই।"
+প্রশ্ন ২ — কী লাগবে এই কাজের জন্য? "যে বইটা যোগ করব সেটা লাগবে।" → তাই parameter নিলাম currentBook
+প্রশ্ন ৩ — আগে কী check করতে হবে? "বইটা কি আগে থেকেই আছে?" → তাই আগে খুঁজলাম
+প্রশ্ন ৪ — দুটো result কী হতে পারে?
+আছে → alert দাও
+নেই → যোগ করো
+
+এভাবে ভাবলে function নিজেই লেখা হয়ে যায়
+js
+const handleMarkAsRead = (currentBook) => {
+  // প্রশ্ন ৩ — আগে আছে কিনা খোঁজো
+  const isExistBook = storeBook.find(
+    (book) => book.bookId === currentBook.bookId
+  );
+
+  // প্রশ্ন ৪ — দুটো result
+  if (isExistBook) {
+    alert("already exist!");      // আছে
+  } else {
+    setStoreBook([...storeBook, currentBook]); // নেই, যোগ করো
+  }
+};
+
+মূল কথা
+Code লেখার আগে বাংলায় ভাবো — ১. কী করতে চাই? ২. কী লাগবে? ৩. কী check করতে হবে? ৪. Result কী হতে পারে?
+এই ৪টা প্রশ্নের উত্তর দিলেই function লেখা হয়ে যাবে।
+

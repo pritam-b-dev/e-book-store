@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useLoaderData, useNavigate, useParams } from "react-router";
+import { BookContextApi } from "../../context/BookContextApi";
 
 //BookCard শুধু URL-এ একটা value রেখে গেছে, আর BookDetails সেটা URL থেকে পড়ছে।
 
@@ -11,7 +12,8 @@ const BookDetails = () => {
 
   const expectedBook = books.find((book) => book.bookId === parseInt(bookId));
 
-  console.log(expectedBook);
+  const { handleMarkAsRead, handleWishList } = useContext(BookContextApi);
+
   return (
     <div>
       <div className="card lg:card-side bg-base-100 shadow-sm container mx-auto p-6 mt-6">
@@ -57,8 +59,18 @@ const BookDetails = () => {
             <span className="font-semibold">Rating:</span> {expectedBook.rating}
           </p>
           <div className="card-actions start pt-4">
-            <button className="btn">Read</button>
-            <button className="btn btn-success">Wish List</button>
+            <button
+              className="btn"
+              onClick={() => handleMarkAsRead(expectedBook)}
+            >
+              Add to Read List
+            </button>
+            <button
+              className="btn btn-success"
+              onClick={() => handleWishList(expectedBook)}
+            >
+              Add to Wish List
+            </button>
           </div>
         </div>
       </div>
