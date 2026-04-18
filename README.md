@@ -1,16 +1,20 @@
-# React + Vite
+# 📚 BookVibe - Your Digital Book Companion
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, interactive e-book management platform where readers can explore books, track their reading progress, and visualize data through charts.
 
-Currently, two official plugins are available:
+## 🚀 Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **📖 Comprehensive Book Details:** Get deep insights into authors, genres, ratings, and summaries.
+- **📑 List Management:** Organize your books into a **Read List** and a **Wishlist**.
+- **🚫 Smart Validation:** Built-in logic to prevent duplicate entries and maintain list integrity.
+- **📊 Data Visualization:** An interactive **Bar Chart** to compare book lengths (page counts) using Recharts.
+- **📱 Fully Responsive:** Seamless experience across mobile, tablet, and desktop devices.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Core:** React.js
+- **Styling:** Tailwind CSS, DaisyUI
+- **Icons:** React Icons
+- **Charts:** Recharts
+- **State:** React Hooks
+- **Deployment:** Netlify
